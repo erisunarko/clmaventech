@@ -14,10 +14,10 @@ app.use(bodyParser.urlencoded({ extended : false }));
 
 // ~ define mySql connection parameter :
 var conn    = mysql.createConnection({
-    host    : 'localhost',
-    user    : 'root',
-    password : '',
-    database : 'db_clmaven'
+    host    : 'localhost', // set value based on your own host
+    user    : 'root', // set your database username
+    password : '', // set your database password
+    database : 'db_clmaven' // set your database name
 });
 
 // ~ connect to mysql connection :
@@ -69,6 +69,10 @@ app.post('/save', (req, res) => {
 app.post('/import', (req, res) => {
     let csv_data    = JSON.parse(req.body.csv_data);
     let data_length = csv_data.length;
+    let query1 = "DELETE FROM tb_employees";
+    conn.query(query1, (err, results) => {
+        if(err) throw err;
+    });
     for(let i=0; i < data_length; i++) {
         let name            = csv_data[i].name;
         let gender          = csv_data[i].gender;
@@ -93,10 +97,9 @@ app.post('/import', (req, res) => {
             phone           : phone,
             email           : email,
             notes           : notes,        
-        }
-        
-        let query = "INSERT INTO tb_employees SET ?";
-        conn.query(query, data, (err, results) => {
+        }        
+        let query2 = "INSERT INTO tb_employees SET ?";
+        conn.query(query2, data, (err, results) => {
             if(err) throw err;            
         });
         

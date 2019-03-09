@@ -1,0 +1,9 @@
+id,name,gender,place_of_birth,date_of_birth,religion,address,phone,email,notes
+,Surja Wibowo,Female,Boyolali,1999/12/03,Islam,"Jl Suara Merdeka no.14, Boyolali",085642184472,surja@testmail.com,Admin Staff
+,Martis Supeno,Male,Medan,2012/12/11,Kong Hu Cu,"Jl Maju Selalu no.55, Medan",085642184473,mrsupen@testmail.com,Supervisor
+,Sugeng,Male,Solo,1992/07/10,Budha,"Jl Serdang no.2A, Solo Baru",085642184472,sugeng@testmail.com,Admin Gudang
+,Wahyudi,Male,Surabaya,1990/07/09,Hindu,"Banggirejo, Surabaya",085642184473,wahyudi@testmail.com,Staff Produksi
+,Eko Prayitno,Male,Malang,2002/08/23,Kristen,"Perum Asri no 3B, Malang",085642184472,ekoprayitno@testmail.com,Staff Produksi
+,Sudiman,Male,Semarang,1987/11/15,Katholik,"Perum Green Lake no.44, Semarang",085642184473,sudiman@testmail.com,Staff Produksi
+,Sari Rahayu,Female,Bandung,1995/10/03,Islam,"Jl Serayu no.12, Bandung",085642184472,sarirahayu@testmail.com,Staff Produksi
+,Astuti Indah,Female,Cirebon,1997/05/07,Kong Hu Cu,"Kampung Siap, Cirebon",085642184473,astutiindah@testmail.com,Staff Produksi
