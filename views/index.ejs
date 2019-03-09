@@ -1,0 +1,373 @@
+<html lang="en">
+    <head>
+        <title>Tech Test</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.6.3/papaparse.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
+    </head>
+    <body>
+        <div class="container-fluid">            
+            <h2>Employees</h2>
+            <hr />
+            <div class="container-fluid" id="root">
+                <table id="res_table">
+                    <thead>
+                        <tr>                    
+                            <td>No</td>
+                            <td>Id</td>
+                            <td>Name</td>
+                            <td>Gender</td>
+                            <td>Place of Birth</td>
+                            <td>Date of Birth</td>
+                            <td>Religion</td>
+                            <td>Address</td>
+                            <td>Phone</td>
+                            <td>Email</td>
+                            <td>Remarks</td>
+                            <td>Edit / Delete</td>
+                        </tr>
+                    </thead>
+                    <tbody>                        
+                            <% for(let i=0; i < data.length; i++) { %>
+                                <tr>
+                                    <td><%= i+1 %></td>
+                                    <td><%= data[i].id %></td>
+                                    <td><%= data[i].name %></td>
+                                    <td><%= data[i].gender %></td>
+                                    <td><%= data[i].place_of_birth %></td>
+                                    <% let dob = data[i].date_of_birth.getDate() + '-' + (data[i].date_of_birth.getMonth()+1) + '-' + data[i].date_of_birth.getFullYear() %>
+                                    <td><%= dob %></td>
+                                    <td><%= data[i].religion %></td>
+                                    <td><%= data[i].address %></td>
+                                    <td><%= data[i].phone %></td>
+                                    <td><%= data[i].email %></td>
+                                    <td><%= data[i].notes %></td>
+                                    <td><a href="#" id="edit_link" data-id="<%= i %>">Edit</a> || <a href="/delete/<%= data[i].id %>" onClick="return confirm('Are you sure delete this record?')">Delete</a></td>
+                                </tr>
+                            <% } %>                        
+                    </tbody>                    
+                </table>                                
+            </div>
+            <hr />
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_modal">Add</button>
+            <button type="button" class="btn btn-primary" id="import_button">Import</button>
+            <button type="button" class="btn btn-primary" id="export_button">Export</button>
+            <button type="button" class="btn btn-primary" id="clear_button">Clear All</a></button>
+            <input type="file" name="csv_file" id="csv_file" accept=".csv" />
+            <a href="/clear" id="clear_link"></a>
+            <!-- Update Modal -->
+            <div id="update_modal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Update data Employee : </h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-inline" method="POST" action="/update" id="update_form">
+                        <table>
+                            <tr>
+                                <td>Name </td>
+                                <td> : </td>
+                                <td><input type="text" class="form-control" name="name" id="name" /></td>
+                            </tr>
+                            <tr>
+                                <td>Gender </td>
+                                <td> : </td>
+                                <td><input type="radio" name="gender" id="male" value="Male" checked>Male</input></td>                                
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><input type="radio" name="gender" id="female" value="Female">Female</input></td>                                
+                            </tr>
+                            <tr>
+                                <td>Place of Birth </td>
+                                <td> : </td>
+                                <td><input type="text" class="form-control" name="place_of_birth" id="place_of_birth" /></td>                                
+                            </tr>
+                            <tr>
+                                <td>Date of Birth </td>
+                                <td> : </td>
+                                <td><input type="date" class="form-control" name="date_of_birth" id="date_of_birth" /></td>                                
+                            </tr>
+                            <tr>
+                                <td>Religion </td>
+                                <td> : </td>
+                                <td><input type="radio" name="religion" id="islam" value="Islam" checked>Islam</input></td>                                
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><input type="radio" name="religion" id='kristen' value="Kristen">Kristen</input></td>                                
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><input type="radio" name="religion" id='katholik' value="Katholik">Katholik</input></td>                                
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><input type="radio" name="religion" id='hindu' value="Hindu">Hindu</input></td>                                
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><input type="radio" name="religion" id='budha' value="Budha">Budha</input></td>                                
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><input type="radio" name="religion" id='konghucu' value="Kong Hu Cu">Kong Hu Cu</input></td>                                
+                            </tr>
+                            <tr>
+                                <td>Address </td>
+                                <td> : </td>
+                                <td><input type="text" class="form-control" name="address" id="address" /></td>
+                            </tr>
+                            <tr>
+                                <td>Phone </td>
+                                <td> : </td>
+                                <td><input type="text" class="form-control" name="phone" id="phone"/></td>                                
+                            </tr>
+                            <tr>
+                                <td>Email </td>
+                                <td> : </td>
+                                <td><input type="email" class="form-control" name="email" id="email" /></td>                                
+                            </tr>
+                            <tr>
+                                <td>Notes </td>
+                                <td> : </td>
+                                <td><textarea class="form-control" rows="3" name="notes" id="notes"></textarea></td>                                
+                            </tr>
+                        </table>
+                        <input type="hidden" name="id" id="id" />                        
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="update_button">Submit</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>
+                </div>
+
+            </div>
+            </div>
+            <!-- end of update_modal -->
+
+            <!-- add Modal -->
+            <div id="add_modal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add data Employee :</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-inline" method="POST" action="/save" id="add_form">
+                        <table>
+                            <tr>
+                                <td>Name </td>
+                                <td> : </td>
+                                <td><input type="text" class="form-control" name="name" id="name" /></td>
+                            </tr>
+                            <tr>
+                                <td>Gender </td>
+                                <td> : </td>
+                                <td><input type="radio" name="gender" id="male" value="Male" checked>Male</input></td>                                
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><input type="radio" name="gender" id="female" value="Female">Female</input></td>                                
+                            </tr>
+                            <tr>
+                                <td>Place of Birth </td>
+                                <td> : </td>
+                                <td><input type="text" class="form-control" name="place_of_birth" id="place_of_birth" /></td>                                
+                            </tr>
+                            <tr>
+                                <td>Date of Birth </td>
+                                <td> : </td>
+                                <td><input type="date" class="form-control" name="date_of_birth" id="date_of_birth" /></td>                                
+                            </tr>
+                            <tr>
+                                <td>Religion </td>
+                                <td> : </td>
+                                <td><input type="radio" name="religion" id="islam" value="Islam" checked>Islam</input></td>                                
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><input type="radio" name="religion" id='kristen' value="Kristen">Kristen</input></td>                                
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><input type="radio" name="religion" id='katholik' value="Katholik">Katholik</input></td>                                
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><input type="radio" name="religion" id='hindu' value="Hindu">Hindu</input></td>                                
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><input type="radio" name="religion" id='budha' value="Budha">Budha</input></td>                                
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><input type="radio" name="religion" id='konghucu' value="Kong Hu Cu">Kong Hu Cu</input></td>                                
+                            </tr>
+                            <tr>
+                                <td>Address </td>
+                                <td> : </td>
+                                <td><input type="text" class="form-control" name="address" id="address" /></td>
+                            </tr>
+                            <tr>
+                                <td>Phone </td>
+                                <td> : </td>
+                                <td><input type="text" class="form-control" name="phone" id="phone"/></td>                                
+                            </tr>
+                            <tr>
+                                <td>Email </td>
+                                <td> : </td>
+                                <td><input type="email" class="form-control" name="email" id="email" /></td>                                
+                            </tr>
+                            <tr>
+                                <td>Notes </td>
+                                <td> : </td>
+                                <td><textarea class="form-control" rows="3" name="notes" id="notes"></textarea></td>                                
+                            </tr>
+                        </table>                      
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="add_button">Submit</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>
+                </div>
+
+            </div>
+            </div>
+            <!-- end of add_modal -->
+        </div>
+    </body>
+    <script>
+        $(document).ready(function() {
+            // ~ make sure js loaded :
+            console.log('Js loaded properly.');
+
+            // ~ set datatables :
+            var table = $('#res_table').DataTable();
+
+            // ~ manage CRUD functions :
+            $('#clear_link').hide();
+            $('#clear_button').on('click', function() {
+                if(confirm('Are you sure delete all records?')) {
+                    let href = $('#clear_link').attr('href');
+                    window.location.href = href;
+                }          
+            });
+            $(document).on('click', '#edit_link', function() {                
+                var row_id = $(this).data('id');
+                var data = table.row(row_id).data();
+                $('#id').val(data[1]);
+                $('#name').val(data[2]);
+                let gender_val = data[3];
+                gender_val == 'Male' ? $("#male").prop('checked', true) : $("#female").prop('checked', true);
+                $('#place_of_birth').val(data[4]);
+                $('#date_of_birth').val(data[5]);
+                let religion_val = data[6];
+                switch(religion_val) {
+                    case 'Islam' :
+                    $("#islam").prop('checked', true)
+                    break;
+                    case 'Kristen' :
+                    $("#kristen").prop('checked', true)
+                    break;
+                    case 'Katholik' :
+                    $("#katholik").prop('checked', true)
+                    break;
+                    case 'Hindu' :
+                    $("#hindu").prop('checked', true)
+                    break;
+                    case 'Budha' :
+                    $("#budha").prop('checked', true)
+                    break;
+                    case 'Kong Hu Cu' :
+                    $("#konghucu").prop('checked', true)
+                    break;
+                }
+                $('#address').val(data[7]);
+                $('#phone').val(data[8]);
+                $('#email').val(data[9]);
+                $('#notes').val(data[10]);
+                $('#update_modal').modal('show');
+            });
+            $('#add_button').on('click', () => {
+                $('form#add_form').submit();
+            });
+            $('#update_button').on('click', () => {
+                $('form#update_form').submit();
+            });
+
+            // ~ manage csv functions :
+            $('#csv_file').hide();
+            $('#import_button').on('click', function() {
+                $('#csv_file').click();                
+            });
+            $('#csv_file').change(function(e) {
+                let file = e.target.files[0];
+                Papa.parse(file, {
+                    header          : true,
+                    dynamicTyping   : true,
+                    skipEmptyLines  : true,
+                    complete: function(results) {
+                        csv_data = JSON.stringify(results.data);
+                        console.log(csv_data);
+                        $.ajax({
+                            url     : '/import',
+                            method  : 'POST',
+                            async   : 'false',
+                            data    : { csv_data : csv_data },
+                            success : function(data) {
+                                        window.location.reload();
+                                    }
+                        });
+                    }
+                });
+            });
+            $('#export_button').on('click', function() {
+                $.ajax({
+                    url     : '/getcsv',
+                    method  : 'GET',
+                    async   : 'false',
+                    success : function(data){
+                                let csv_data = Papa.unparse(data);
+                                //console.log(csv_data);
+                                download_csv(csv_data);
+                            }
+                });
+            });
+            function download_csv(params) {
+                var hiddenElement = document.createElement('a');
+                hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(params);
+                hiddenElement.target = '_blank';
+                hiddenElement.download = 'Employees.csv';
+                hiddenElement.click();
+            }            
+        });
+    </script>
+</html>
